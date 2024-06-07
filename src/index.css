@@ -1,0 +1,50 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background-color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+.wrapper > * {
+  flex: 1;
+}
+.box {
+  display: block;
+  height: 100px;
+  display: grid;
+  place-content: center;
+  aspect-ratio: 1/1;
+
+  border: 1px solid black;
+}
+.box.close {
+  background-color: rgb(235, 171, 52);
+}
+.box.correct {
+  background-color: rgb(59, 253, 0);
+}
+input {
+  /* opacity: 0; */
+  position: absolute;
+
+  caret-color: transparent;
+}
+#typeIn {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

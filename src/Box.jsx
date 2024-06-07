@@ -7,6 +7,9 @@ const Box = ({ letter, index, boxPosition }) => {
   if (!letter) {
     letter = "";
   }
+  if (boxPosition < rowPosition) {
+    flag = "wrong";
+  }
   if (prevAnswersCORRECTPOSITION) {
     if (prevAnswersCORRECTPOSITION.length > 0 && boxPosition < rowPosition) {
       for (let i = 0; i < prevAnswersCORRECTPOSITION[boxPosition].length; i++) {
@@ -25,13 +28,16 @@ const Box = ({ letter, index, boxPosition }) => {
       }
     }
   }
+
   return (
     <div
       className={`box ${flag == "correct" ? "correct" : ""} ${
         flag == "almostcorrect" ? "close" : ""
-      }`}
+      } ${flag == "wrong" ? "wrong" : ""}`}
     >
-      <h1>{letter[index]}</h1>
+      <h1 className={`${boxPosition < rowPosition ? "answered" : ""}`}>
+        {letter[index]}
+      </h1>
     </div>
   );
 };

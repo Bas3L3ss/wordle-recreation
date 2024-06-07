@@ -93,7 +93,6 @@ const GlobalContext = ({ children }) => {
       return;
     }
   };
-  console.log(answer);
   saveToLocaleStorage("score", score);
   saveToLocaleStorage("streak", streak);
   return (

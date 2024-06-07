@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import Boxes from "./Boxes";
 import { useAppContext } from "./GlobalContext";
 import { nanoid } from "nanoid";
@@ -44,14 +44,20 @@ function App() {
   });
 
   return (
-    <form className="container" onSubmit={handleSubmit}>
+    <form className="container" onSubmit={ensureFocus}>
       <h1>Wordle - Base Made</h1>
       <h2>
         scores: {score} streaks: {streak}
       </h2>
-      {fakeArr.map((_, index) => {
-        return <Boxes key={nanoid()} length={wordLength} index={index} />;
-      })}
+      <button
+        type="button"
+        className="focus"
+        onClick={() => {
+          inputRef.current.focus();
+        }}
+      >
+        Guess
+      </button>
       <input
         ref={inputRef}
         name="result"
@@ -62,6 +68,9 @@ function App() {
         type="text"
         onChange={() => handleChange(event)}
       />
+      {fakeArr.map((_, index) => {
+        return <Boxes key={nanoid()} length={wordLength} index={index} />;
+      })}
     </form>
   );
 }

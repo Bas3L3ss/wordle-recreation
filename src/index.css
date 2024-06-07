@@ -14,10 +14,10 @@ body {
   justify-content: center;
 }
 h1 {
-  font-size: clamp(1rem, 0.5rem + 2vw, 2rem);
+  font-size: clamp(1.4rem, 0.5577rem + 1.9231vw, 2rem);
 }
 h2 {
-  font-size: clamp(0.8rem, 0.3rem + 2vw, 1.7rem);
+  font-size: clamp(1rem, 0.8154rem + 0.5128vw, 1.2rem);
 }
 #root {
   width: 100%;

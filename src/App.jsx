@@ -44,18 +44,12 @@ function App() {
   });
 
   return (
-    <form className="container" onSubmit={ensureFocus}>
+    <form className="container" onSubmit={handleSubmit}>
       <h1>Wordle - Base Made</h1>
       <h2>
         scores: {score} streaks: {streak}
       </h2>
-      <button
-        type="button"
-        className="focus"
-        onClick={() => {
-          inputRef.current.focus();
-        }}
-      >
+      <button type="button" className="focus" onClick={ensureFocus}>
         Guess
       </button>
       <input

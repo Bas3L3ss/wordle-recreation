@@ -31,7 +31,10 @@ const GlobalContext = ({ children }) => {
     () => Math.floor(Math.random() * words.length),
     [streak, words, triggleInitial]
   );
-  let answer = useMemo(() => words[randomIndex].toUpperCase(), [streak]);
+  let answer = useMemo(
+    () => words[randomIndex].toUpperCase(),
+    [streak, triggleInitial]
+  );
   const maxTry = 6;
   const wordLength = useMemo(() => answer.length, [words, randomIndex]);
 

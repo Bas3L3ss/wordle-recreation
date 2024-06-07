@@ -47,7 +47,7 @@ function App() {
     <form className="container" onSubmit={handleSubmit}>
       <h1>Wordle - Base Made</h1>
       <h2>
-        score: {score} streak: {streak}
+        scores: {score} streaks: {streak}
       </h2>
       {fakeArr.map((_, index) => {
         return <Boxes key={nanoid()} length={wordLength} index={index} />;

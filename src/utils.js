@@ -16,7 +16,6 @@ export function isAllLetters(input) {
   return true;
 }
 export const saveToLocaleStorage = (dataString, data) => {
-  console.log(data);
   localStorage.setItem(dataString, data);
 };
 export const getDataFromLocalStorage = (dataString) => {
@@ -24,4 +23,13 @@ export const getDataFromLocalStorage = (dataString) => {
 
   const parseddataString = JSON.parse(getDataFromLocalStorage);
   return parseddataString ? parseddataString : 0;
+};
+export const removeDecimal = (number) => {
+  if (number >= 0) {
+    // For non-negative numbers, use Math.floor
+    return Math.floor(number);
+  } else {
+    // For negative numbers, use Math.ceil
+    return Math.ceil(number);
+  }
 };

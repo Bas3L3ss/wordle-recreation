@@ -1,4 +1,11 @@
-import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET } from "./actions";
+import {
+  SAVE_CHECK,
+  INPUT_CHANGE,
+  NEXT_ROW,
+  RESET,
+  SCORE_REMOVAL,
+} from "./actions";
+import { removeDecimal } from "./utils";
 const reducer = (state, action) => {
   if (action.type === INPUT_CHANGE) {
     const newPosition = action.payload.event.target.value.length - 1;
@@ -67,6 +74,27 @@ const reducer = (state, action) => {
 
   if (action.type === RESET) {
     return { ...action.payload.defaultState };
+  }
+  if (action.type === SCORE_REMOVAL) {
+    let removeFactor = 10;
+    const thisCORRECTPOSITION =
+      state.prevAnswersCORRECTPOSITION[state.rowPosition - 1];
+    for (let i = 0; i < thisCORRECTPOSITION.length; i++) {
+      removeFactor = removeFactor + 2;
+    }
+    const thisALMOSTPOSITION =
+      state.prevAnswersALMOSTPOSITION[state.rowPosition - 1];
+    for (let i = 0; i < thisALMOSTPOSITION.length; i++) {
+      removeFactor = removeFactor + 1;
+    }
+    if (!(action.payload.score <= 0)) {
+      action.payload.setScore(
+        removeDecimal(action.payload.score - state.scoreRate / removeFactor)
+      );
+    } else {
+      action.payload.setScore(0);
+    }
+    return { ...state };
   }
 };
 export default reducer;

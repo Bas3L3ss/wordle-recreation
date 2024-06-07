@@ -1,7 +1,13 @@
 import { createContext, useMemo, useReducer, useState } from "react";
 import { useContext } from "react";
 import data from "./data";
-import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET } from "./actions";
+import {
+  SAVE_CHECK,
+  INPUT_CHANGE,
+  NEXT_ROW,
+  RESET,
+  SCORE_REMOVAL,
+} from "./actions";
 import reducer from "./reducer";
 import {
   getDataFromLocalStorage,
@@ -20,7 +26,6 @@ const GlobalContext = ({ children }) => {
   let [streak, setStreak] = useState(getDataFromLocalStorage("streak"));
 
   let [score, setScore] = useState(getDataFromLocalStorage("score"));
-  console.log(streak, score);
   const words = useMemo(() => data.words, []);
   const randomIndex = useMemo(
     () => Math.floor(Math.random() * words.length),
@@ -67,6 +72,8 @@ const GlobalContext = ({ children }) => {
       }
       //failed
       if (state.rowPosition + 1 == maxTry) {
+        dispatch({ type: SCORE_REMOVAL, payload: { score, setScore } });
+
         alert("you've failed!");
         if (streak == 0) {
           setTriggleInitial(!triggleInitial);
@@ -78,14 +85,17 @@ const GlobalContext = ({ children }) => {
         return;
       }
       //nextline
+
       dispatch({ type: SAVE_CHECK, payload: { result, answer } });
       dispatch({ type: NEXT_ROW });
+      dispatch({ type: SCORE_REMOVAL, payload: { score, setScore } });
     } else {
       return;
     }
   };
-  saveToLocaleStorage("streak", streak);
+  console.log(answer);
   saveToLocaleStorage("score", score);
+  saveToLocaleStorage("streak", streak);
   return (
     <AppContext.Provider
       value={{

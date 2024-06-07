@@ -15,3 +15,13 @@ export function isAllLetters(input) {
   }
   return true;
 }
+export const saveToLocaleStorage = (dataString, data) => {
+  console.log(data);
+  localStorage.setItem(dataString, data);
+};
+export const getDataFromLocalStorage = (dataString) => {
+  const getDataFromLocalStorage = localStorage.getItem(dataString);
+
+  const parseddataString = JSON.parse(getDataFromLocalStorage);
+  return parseddataString ? parseddataString : 0;
+};

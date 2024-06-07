@@ -1,9 +1,13 @@
-import { createContext, useEffect, useMemo, useReducer, useState } from "react";
+import { createContext, useMemo, useReducer, useState } from "react";
 import { useContext } from "react";
 import data from "./data";
-import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET, UPDATE } from "./actions";
+import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET } from "./actions";
 import reducer from "./reducer";
-import { isAllLetters } from "./utils";
+import {
+  getDataFromLocalStorage,
+  isAllLetters,
+  saveToLocaleStorage,
+} from "./utils";
 
 export const AppContext = createContext();
 
@@ -11,14 +15,18 @@ export const useAppContext = () => {
   return useContext(AppContext);
 };
 const GlobalContext = ({ children }) => {
-  let [score, setScore] = useState(0);
+  const [triggleInitial, setTriggleInitial] = useState(true);
+
+  let [streak, setStreak] = useState(getDataFromLocalStorage("streak"));
+
+  let [score, setScore] = useState(getDataFromLocalStorage("score"));
+  console.log(streak, score);
   const words = useMemo(() => data.words, []);
   const randomIndex = useMemo(
     () => Math.floor(Math.random() * words.length),
-    [score, words]
+    [streak, words, triggleInitial]
   );
-  console.log(randomIndex);
-  let answer = useMemo(() => words[randomIndex].toUpperCase(), [randomIndex]);
+  let answer = useMemo(() => words[randomIndex].toUpperCase(), [streak]);
   const maxTry = 6;
   const wordLength = useMemo(() => answer.length, [words, randomIndex]);
 
@@ -47,29 +55,48 @@ const GlobalContext = ({ children }) => {
       return;
     }
     if (result.length == wordLength) {
+      //correct
       if (answer == state.guessWord) {
+        setStreak(streak + 1);
         setScore(score + state.scoreRate);
+
         alert("correct! answer: " + answer);
 
         dispatch({ type: RESET, payload: { defaultState } });
         return;
       }
+      //failed
       if (state.rowPosition + 1 == maxTry) {
         alert("you've failed!");
+        if (streak == 0) {
+          setTriggleInitial(!triggleInitial);
+        }
+        setStreak(0);
+        saveToLocaleStorage("streak", streak);
+
         dispatch({ type: RESET, payload: { defaultState } });
         return;
       }
-
+      //nextline
       dispatch({ type: SAVE_CHECK, payload: { result, answer } });
       dispatch({ type: NEXT_ROW });
     } else {
       return;
     }
   };
-
+  saveToLocaleStorage("streak", streak);
+  saveToLocaleStorage("score", score);
   return (
     <AppContext.Provider
-      value={{ maxTry, wordLength, handleChange, ...state, checkAnswer, score }}
+      value={{
+        maxTry,
+        wordLength,
+        handleChange,
+        ...state,
+        checkAnswer,
+        score,
+        streak,
+      }}
     >
       {children}
     </AppContext.Provider>

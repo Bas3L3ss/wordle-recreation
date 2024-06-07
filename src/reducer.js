@@ -1,4 +1,4 @@
-import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET, UPDATE } from "./actions";
+import { SAVE_CHECK, INPUT_CHANGE, NEXT_ROW, RESET } from "./actions";
 const reducer = (state, action) => {
   if (action.type === INPUT_CHANGE) {
     const newPosition = action.payload.event.target.value.length - 1;

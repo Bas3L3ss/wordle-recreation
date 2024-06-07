@@ -15,8 +15,15 @@ function App() {
     };
   }, []);
 
-  const { maxTry, wordLength, handleChange, guessWord, checkAnswer, score } =
-    useAppContext();
+  const {
+    maxTry,
+    wordLength,
+    handleChange,
+    guessWord,
+    checkAnswer,
+    score,
+    streak,
+  } = useAppContext();
 
   const inputRef = useRef(null);
   const ensureFocus = () => {
@@ -39,7 +46,9 @@ function App() {
   return (
     <form className="container" onSubmit={handleSubmit}>
       <h1>Wordle - Base Made</h1>
-      <h2>score: {score}</h2>
+      <h2>
+        score: {score} streak: {streak}
+      </h2>
       {fakeArr.map((_, index) => {
         return <Boxes key={nanoid()} length={wordLength} index={index} />;
       })}

@@ -8,11 +8,11 @@ const Box = ({ letter, index, boxPosition }) => {
     currentPosition,
   } = useAppContext();
   let pointer = "";
-  if (boxPosition == rowPosition && index == currentPosition) {
-    pointer = "selecting";
-  } else {
-    pointer = "";
-  }
+  // if (boxPosition == rowPosition && index == currentPosition + 1) {
+  //   pointer = "selecting";
+  // } else {
+  //   pointer = "";
+  // }
   let flag = "";
   if (!letter) {
     letter = "";

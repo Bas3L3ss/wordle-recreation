@@ -1,8 +1,18 @@
 import { useAppContext } from "./GlobalContext";
 
 const Box = ({ letter, index, boxPosition }) => {
-  const { prevAnswersCORRECTPOSITION, prevAnswersALMOSTPOSITION, rowPosition } =
-    useAppContext();
+  const {
+    prevAnswersCORRECTPOSITION,
+    prevAnswersALMOSTPOSITION,
+    rowPosition,
+    currentPosition,
+  } = useAppContext();
+  let pointer = "";
+  if (boxPosition == rowPosition && index == currentPosition) {
+    pointer = "selecting";
+  } else {
+    pointer = "";
+  }
   let flag = "";
   if (!letter) {
     letter = "";
@@ -33,7 +43,9 @@ const Box = ({ letter, index, boxPosition }) => {
     <div
       className={`box ${flag == "correct" ? "correct" : ""} ${
         flag == "almostcorrect" ? "close" : ""
-      } ${flag == "wrong" ? "wrong" : ""}`}
+      } ${flag == "wrong" ? "wrong" : ""} ${
+        pointer == "selecting" ? "selecting" : ""
+      }`}
     >
       <h1 className={`${boxPosition < rowPosition ? "answered" : ""}`}>
         {letter[index]}

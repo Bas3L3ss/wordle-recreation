@@ -62,6 +62,10 @@ const GlobalContext = ({ children }) => {
       alert("must be words");
       return;
     }
+    if (!words.includes(result.toLowerCase())) {
+      alert("this word does not include in the list, please retype!");
+      return;
+    }
     if (result.length == wordLength) {
       //correct
       if (answer == state.guessWord) {
@@ -77,7 +81,7 @@ const GlobalContext = ({ children }) => {
       if (state.rowPosition + 1 == maxTry) {
         dispatch({ type: SCORE_REMOVAL, payload: { score, setScore } });
 
-        alert("you've failed!");
+        alert("you've failed! the answer was: " + answer);
         if (streak == 0) {
           setTriggleInitial(!triggleInitial);
         }

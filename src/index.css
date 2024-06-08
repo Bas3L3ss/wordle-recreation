@@ -56,6 +56,9 @@ h2 {
 .box.wrong {
   background-color: rgb(122, 122, 122);
 }
+.selecting {
+  border: 1px solid red;
+}
 .answered {
   color: white;
 }
